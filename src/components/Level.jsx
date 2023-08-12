@@ -3,7 +3,6 @@ import BlockSpinner from './BlockSpinner';
 import BlockStart from './BlockStart';
 import BlockHorizontal from './BlockHorizontal';
 import BlockEnd from './BlockEnd';
-import { Physics, Debug } from '@react-three/rapier';
 import { useMemo } from 'react';
 import Walls from './Walls';
 const Level = ({
@@ -20,22 +19,16 @@ const Level = ({
     }, [types, count]);
     return (
         <>
-            <Physics>
-                <Debug />
-                <BlockStart position={[0, 0, 0]} scale={[4, 0.2, 4]} />
-                {blocks.map((Block, i) => (
-                    <Block
-                        key={i}
-                        position={[0, 0, -(i + 1) * 4]}
-                        scale={[4, 0.2, 4]}
-                    />
-                ))}
-                <BlockEnd
-                    position={[0, 0, -(count + 1) * 4]}
+            <BlockStart position={[0, 0, 0]} scale={[4, 0.2, 4]} />
+            {blocks.map((Block, i) => (
+                <Block
+                    key={i}
+                    position={[0, 0, -(i + 1) * 4]}
                     scale={[4, 0.2, 4]}
                 />
-                <Walls length={count + 2} />
-            </Physics>
+            ))}
+            <BlockEnd position={[0, 0, -(count + 1) * 4]} scale={[4, 0.2, 4]} />
+            <Walls length={count + 2} />
         </>
     );
 };
