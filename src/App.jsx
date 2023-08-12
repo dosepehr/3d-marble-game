@@ -1,7 +1,7 @@
 import { OrbitControls } from '@react-three/drei';
-import Level from './Level';
-import Lights from './Lights';
-import Stats from './Stats';
+import Level from './components/Level';
+import Lights from './components/Lights';
+import Stats from './components/Stats';
 const App = () => {
     return (
         <>
