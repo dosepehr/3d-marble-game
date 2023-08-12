@@ -1,11 +1,11 @@
 import { useFrame } from '@react-three/fiber';
 import { boxGeometry, floor2Material, obstacleMaterial } from './helpers';
-import { RigidBody, Physics, Debug } from '@react-three/rapier';
+import { RigidBody } from '@react-three/rapier';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
 const BlockSpinner = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
     const obstacle = useRef();
-    //   const [speed] = useState(() => Math.random() + 0.2)
+
     const [speed] = useState(
         () => (Math.random() + 0.2) * (Math.random() < 0.5 ? -1 : 1)
     );
@@ -23,7 +23,7 @@ const BlockSpinner = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
                 geometry={boxGeometry}
                 material={floor2Material}
                 position={[0, -0.1, 0]}
-                scale={[4, 0.2, 4]}
+                scale={scale}
                 receiveShadow
             />
             <RigidBody
