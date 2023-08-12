@@ -5,6 +5,7 @@ import BlockHorizontal from './BlockHorizontal';
 import BlockEnd from './BlockEnd';
 import { Physics, Debug } from '@react-three/rapier';
 import { useMemo } from 'react';
+import Walls from './Walls';
 const Level = ({
     count = 5,
     types = [BlockSpinner, BlockVertical, BlockHorizontal],
@@ -17,7 +18,6 @@ const Level = ({
         }
         return blocks;
     }, [types, count]);
-    console.log(blocks);
     return (
         <>
             <Physics>
@@ -34,6 +34,7 @@ const Level = ({
                     position={[0, 0, -(count + 1) * 4]}
                     scale={[4, 0.2, 4]}
                 />
+                <Walls length={count + 2} />
             </Physics>
         </>
     );
