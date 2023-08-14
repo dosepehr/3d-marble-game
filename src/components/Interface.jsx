@@ -1,5 +1,7 @@
 import { useKeyboardControls } from '@react-three/drei';
 import useGame from '../hooks/useGame';
+import { useEffect, useRef } from 'react';
+import { addEffect } from '@react-three/fiber';
 const Interface = () => {
     const forward = useKeyboardControls((state) => state.forward);
     const backward = useKeyboardControls((state) => state.backward);
@@ -10,11 +12,35 @@ const Interface = () => {
     const restart = useGame((state) => state.restart);
     const phase = useGame((state) => state.phase);
 
+    const time = useRef();
+
+    useEffect(() => {
+        const unsubscribedEffect = addEffect(() => {
+            const state = useGame.getState();
+            let elapsedTime = 0;
+            if (state.phase === 'playing') {
+                elapsedTime = Date.now() - state.startTime;
+            } else if (state.phase === 'ended') {
+                elapsedTime = state.endTime - state.startTime;
+            }
+
+            elapsedTime = (elapsedTime /= 1000).toFixed(2);
+            if (time.current) {
+                time.current.textContent = elapsedTime;
+            }
+        });
+        return () => {
+            unsubscribedEffect();
+        };
+    }, []);
+
     return (
         <>
             <div className='interface'>
                 {/* Time */}
-                <div className='time'>0.00</div>
+                <div className='time' ref={time}>
+                    0.00
+                </div>
                 {/* Restart */}
 
                 {phase === 'ended' && (
