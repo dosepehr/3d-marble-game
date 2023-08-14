@@ -31,13 +31,14 @@ const BlockEnd = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
                     position={[0, 0.25, 0]}
                 >
                     <CylinderCollider
-                        args={[0.5, 1.25]}
+                        args={[0.5, 1.2]}
                         position={[0, 0.5, 0]}
                     />
                     <primitive
+                        position={[0,1,0]}
                         ref={hamburger}
                         object={hamburgerModel.scene}
-                        scale={0.2}
+                        // scale={0.2}
                     />
                 </RigidBody>
             </group>
