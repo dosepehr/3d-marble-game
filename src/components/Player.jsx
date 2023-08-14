@@ -5,7 +5,31 @@ import { useRef, useEffect } from 'react';
 const Player = () => {
     const marble = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
+    const { rapier, world } = useRapier();
+    const rapierWorld = world.raw();
+    const jump = () => {
+        const origin = marble.current.translation();
+        origin.y -= 0.31;
+        const direction = { x: 0, y: -1, z: 0 };
+        const ray = new rapier.Ray(origin, direction);
+        const hit = rapierWorld.castRay(ray, 10, true);
 
+        if (hit?.toi < 0.15) {
+            marble.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+        }
+    };
+    useEffect(() => {
+        const unsubcribedJump = subscribeKeys(
+            // jump function
+            (state) => state.jump,
+            (value) => {
+                if (value) jump();
+            }
+        );
+        return () => {
+            unsubcribedJump();
+        };
+    }, []);
     useFrame((state, delta) => {
         const { forward, backward, leftward, rightward } = getKeys();
         const impulse = { x: 0, y: 0, z: 0 };
