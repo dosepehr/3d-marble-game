@@ -9,7 +9,7 @@ const Player = () => {
     const marble = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const { rapier, world } = useRapier();
-    const rapierWorld = world.raw();
+    const rapierWorld = world
 
     const start = useGame((state) => state.start);
     const end = useGame((state) => state.end);

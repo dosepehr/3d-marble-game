@@ -1,4 +1,4 @@
-import { Physics, Debug } from '@react-three/rapier';
+import { Physics } from '@react-three/rapier';
 import Level from './components/Level';
 import Lights from './components/Lights';
 import Stats from './components/Stats';
@@ -10,7 +10,6 @@ const App = () => {
     return (
         <>
             <Physics>
-                <Debug />
                 <Level count={blocksCount} seed={blocksSeed} />
                 <Stats />
                 <Lights />
