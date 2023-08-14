@@ -4,6 +4,7 @@ import { useKeyboardControls } from '@react-three/drei';
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import useGame from '../hooks/useGame';
+
 const Player = () => {
     const marble = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
@@ -31,7 +32,23 @@ const Player = () => {
             marble.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
         }
     };
+    const reset = () => {
+        marble.current.setTranslation({ x: 0, y: 1, z: 0 });
+        marble.current.setLinvel({ x: 0, y: 0, z: 0 });
+        marble.current.setAngvel({ x: 0, y: 0, z: 0 });
+        marble.current.setRotation({ x: 0, y: 0, z: 0, w: 1 });
+    };
+
     useEffect(() => {
+        const unsubscribeReset = useGame.subscribe(
+            (state) => state.phase,
+            (phase) => {
+                if (phase === 'ready') {
+                    reset();
+                }
+            }
+        );
+
         const unsubcribedJump = subscribeKeys(
             // jump function
             (state) => state.jump,
@@ -44,6 +61,7 @@ const Player = () => {
         return () => {
             unsubcribedJump();
             unsubcribedAny();
+            unsubscribeReset();
         };
     }, []);
     useFrame((state, delta) => {
