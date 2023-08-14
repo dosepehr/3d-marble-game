@@ -6,11 +6,12 @@ import Player from './components/Player';
 import useGame from './hooks/useGame';
 const App = () => {
     const blocksCount = useGame((state) => state.blocksCount);
+    const blocksSeed = useGame((state) => state.blocksSeed);
     return (
         <>
             <Physics>
                 <Debug />
-                <Level count={blocksCount} />
+                <Level count={blocksCount} seed={blocksSeed} />
                 <Stats />
                 <Lights />
                 <Player />

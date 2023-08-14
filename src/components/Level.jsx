@@ -8,6 +8,7 @@ import Walls from './Walls';
 const Level = ({
     count = 5,
     types = [BlockSpinner, BlockVertical, BlockHorizontal],
+    seed = 0,
 }) => {
     const blocks = useMemo(() => {
         const blocks = [];
@@ -16,7 +17,7 @@ const Level = ({
             blocks.push(types[index]);
         }
         return blocks;
-    }, [types, count]);
+    }, [types, count, seed]);
     return (
         <>
             <BlockStart position={[0, 0, 0]} scale={[4, 0.2, 4]} />
