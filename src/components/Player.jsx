@@ -2,6 +2,7 @@ import { RigidBody, useRapier } from '@react-three/rapier';
 import { useFrame } from '@react-three/fiber';
 import { useKeyboardControls } from '@react-three/drei';
 import { useRef, useEffect } from 'react';
+import * as THREE from 'three';
 const Player = () => {
     const marble = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
@@ -31,6 +32,9 @@ const Player = () => {
         };
     }, []);
     useFrame((state, delta) => {
+        /**
+         * controls
+         */
         const { forward, backward, leftward, rightward } = getKeys();
         const impulse = { x: 0, y: 0, z: 0 };
         const torque = { x: 0, y: 0, z: 0 };
@@ -54,6 +58,22 @@ const Player = () => {
         }
         marble.current.applyImpulse(impulse);
         marble.current.applyTorqueImpulse(torque);
+
+        /**
+         * camera
+         */
+        const marblePosition = marble.current.translation();
+
+        const cameraPosition = new THREE.Vector3();
+        cameraPosition.copy(marblePosition);
+        cameraPosition.z += 2.25;
+        cameraPosition.y += 0.65;
+        
+        const cameraTarget = new THREE.Vector3();
+        cameraTarget.copy(marblePosition);
+        cameraTarget.y += 0.65;
+        state.camera.position.copy(cameraPosition);
+        state.camera.lookAt(cameraTarget);
     });
     return (
         <>

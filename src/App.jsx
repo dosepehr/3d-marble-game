@@ -1,4 +1,3 @@
-import { OrbitControls } from '@react-three/drei';
 import { Physics, Debug } from '@react-three/rapier';
 import Level from './components/Level';
 import Lights from './components/Lights';
@@ -9,7 +8,6 @@ const App = () => {
         <>
             <Physics>
                 <Debug />
-                <OrbitControls makeDefault />
                 <Level />
                 <Stats />
                 <Lights />
