@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')).render(
             >
                 <App />
             </Canvas>
+            <Interface />
         </KeyboardControls>
-        <Interface />
     </StrictMode>
 );
