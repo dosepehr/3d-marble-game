@@ -3,11 +3,18 @@ import { useFrame } from '@react-three/fiber';
 import { useKeyboardControls } from '@react-three/drei';
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
+import useGame from '../hooks/useGame';
 const Player = () => {
     const marble = useRef();
     const [subscribeKeys, getKeys] = useKeyboardControls();
     const { rapier, world } = useRapier();
     const rapierWorld = world.raw();
+
+    const start = useGame((state) => state.start);
+    const end = useGame((state) => state.end);
+    const blocksCount = useGame((state) => state.blocksCount);
+    const restart = useGame((state) => state.restart);
+
     const [smoothCameraPosition] = useState(
         () => new THREE.Vector3(-20, -20, -20)
     );
@@ -32,8 +39,11 @@ const Player = () => {
                 if (value) jump();
             }
         );
+        const unsubcribedAny = subscribeKeys(() => start());
+
         return () => {
             unsubcribedJump();
+            unsubcribedAny();
         };
     }, []);
     useFrame((state, delta) => {
@@ -82,6 +92,16 @@ const Player = () => {
         smoothCameraTarget.lerp(cameraTarget, 5 * delta);
         state.camera.position.copy(smoothCameraPosition);
         state.camera.lookAt(smoothCameraTarget);
+
+        /**
+         * phases
+         */
+        if (marblePosition.z < -(blocksCount * 4 + 2)) {
+            end();
+        }
+        if (marblePosition.y < -4) {
+            restart();
+        }
     });
     return (
         <>
