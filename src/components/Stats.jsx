@@ -1,4 +1,3 @@
-import React from 'react';
 import { Perf } from 'r3f-perf';
 
 const Stats = () => {
