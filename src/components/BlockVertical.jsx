@@ -1,7 +1,8 @@
 import { useFrame } from '@react-three/fiber';
-import { boxGeometry, floor2Material, obstacleMaterial } from './helpers';
+import { boxGeometry, obstacleMaterial } from './helpers';
 import { RigidBody } from '@react-three/rapier';
 import { useRef, useState } from 'react';
+import BlockContainer from './BlockContainer';
 const BlockVertical = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
     const obstacle = useRef();
 
@@ -17,15 +18,7 @@ const BlockVertical = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
     });
     return (
         <>
-            <group position={position}>
-                {/* block */}
-                <mesh
-                    scale={scale}
-                    geometry={boxGeometry}
-                    material={floor2Material}
-                    position-y={-0.1}
-                    receiveShadow
-                ></mesh>
+            <BlockContainer position={position} scale={scale}>
                 {/* vertical trap */}
                 <RigidBody
                     ref={obstacle}
@@ -42,7 +35,7 @@ const BlockVertical = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
                         receiveShadow
                     />
                 </RigidBody>
-            </group>
+            </BlockContainer>
         </>
     );
 };

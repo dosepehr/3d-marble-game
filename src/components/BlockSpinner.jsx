@@ -1,8 +1,9 @@
 import { useFrame } from '@react-three/fiber';
-import { boxGeometry, floor2Material, obstacleMaterial } from './helpers';
+import { boxGeometry, obstacleMaterial } from './helpers';
 import { RigidBody } from '@react-three/rapier';
 import { useRef, useState } from 'react';
 import * as THREE from 'three';
+import BlockContainer from './BlockContainer';
 const BlockSpinner = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
     const obstacle = useRef();
 
@@ -18,14 +19,7 @@ const BlockSpinner = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
         obstacle.current.setNextKinematicRotation(rotation);
     });
     return (
-        <group position={position}>
-            <mesh
-                geometry={boxGeometry}
-                material={floor2Material}
-                position={[0, -0.1, 0]}
-                scale={scale}
-                receiveShadow
-            />
+        <BlockContainer position={position} scale={scale}>
             <RigidBody
                 ref={obstacle}
                 type='kinematicPosition'
@@ -41,7 +35,7 @@ const BlockSpinner = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
                     receiveShadow
                 />
             </RigidBody>
-        </group>
+        </BlockContainer>
     );
 };
 

@@ -1,5 +1,5 @@
 import { boxGeometry, floor1Material } from './helpers';
-const BlockStart = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
+const BlockContainer = ({ position = [0, 0, 0], scale = [1, 1, 1], children }) => {
     return (
         <>
             <group position={position}>
@@ -10,9 +10,10 @@ const BlockStart = ({ position = [0, 0, 0], scale = [1, 1, 1] }) => {
                     position-y={-0.1}
                     receiveShadow
                 />
+                {children}
             </group>
         </>
     );
 };
 
-export default BlockStart;
+export default BlockContainer;

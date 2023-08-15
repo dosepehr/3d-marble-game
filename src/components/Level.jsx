@@ -1,6 +1,6 @@
 import BlockVertical from './BlockVertical';
 import BlockSpinner from './BlockSpinner';
-import BlockStart from './BlockStart';
+import BlockContainer from './BlockContainer';
 import BlockHorizontal from './BlockHorizontal';
 import BlockEnd from './BlockEnd';
 import { useMemo } from 'react';
@@ -20,7 +20,7 @@ const Level = ({
     }, [types, count, seed]);
     return (
         <>
-            <BlockStart position={[0, 0, 0]} scale={[4, 0.2, 4]} />
+            <BlockContainer position={[0, 0, 0]} scale={[4, 0.2, 4]} />
             {blocks.map((Block, i) => (
                 <Block
                     key={i}
